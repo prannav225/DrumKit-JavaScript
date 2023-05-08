@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./sounds/icon.png" type="image/x-icon">
+    <title>Drum-Kit</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('https://images.unsplash.com/photo-1602939444907-6e688c594a66?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80');
+        font-family: 'Roboto';
+    }
+
+    .keys {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 80vh;
+        color: aliceblue;
+    }
+
+    .key {
+        border: 1px solid #fff;
+        border-radius: 50%;
+        width: 75px;
+        height: 75px;
+        text-align: center;
+        margin: 10px;
+        transition: all ease-in-out 0.09s;
+        background-color: rgba(77, 76, 76, 0.3);
+    }
+
+    .playing {
+        border: 2px dotted rgb(57, 139, 169);
+        transform: scale(1.05);
+        color: rgb(57, 139, 169);
+        box-shadow: 1px 1px 10px rgb(57, 139, 169);
+    }
+
+    .heading {
+        display: flex;
+        justify-content: center;
+        color: gold;
+        position: relative;
+        top: 50px;
+        text-decoration: underline;
+    }
+    
+</style>
+
+<body>
+    <h1 class="heading">Drum Kit</h1>
+    <div class="keys">
+        <div data-key="65" class="key">
+            <p>A <br>
+            <span class="sound">Kick</span></p>
+        </div>
+        <div data-key="83" class="key">
+            <p>S <br>
+            <span class="sound">Snare</span></p>
+        </div>
+        <div data-key="68" class="key">
+            <p>D <br>
+            <span class="sound">Claps</span></p>
+        </div>
+        <div data-key="70" class="key">
+            <p>F <br>
+            <span class="sound">Rim-Shot</span></p>
+        </div>
+        <div data-key="71" class="key">
+            <p>G <br>
+            <span class="sound">Stick</span>
+        </div>
+        <div data-key="72" class="key">
+            <p>H <br>
+            <span class="sound">Shaker</span>
+        </div>
+        <div data-key="74" class="key">
+            <p>J <br>
+            <span class="sound">Cymbal</span>
+        </div>
+        <div data-key="75" class="key">
+            <p>K <br>
+            <span class="sound">Tom</span>
+        </div>
+        <div data-key="76" class="key">
+            <p>L <br>
+            <span class="sound">Snap</span>
+        </div>
+    </div>
+    <audio data-key="65" src="./sounds/side kick drum.wav"></audio>
+    <audio data-key="83" src="./sounds//snare.wav"></audio>
+    <audio data-key="68" src="./sounds//claps.wav"></audio>
+    <audio data-key="70" src="./sounds/rim-shot.wav"></audio>
+    <audio data-key="71" src="./sounds/stick.wav"></audio>
+    <audio data-key="72" src="./sounds/shaker.wav"></audio>
+    <audio data-key="74" src="./sounds/cymbal.wav"></audio>
+    <audio data-key="75" src="./sounds//Tom.wav"></audio>
+    <audio data-key="76" src="./sounds//snap.wav"></audio>
+</body>
+<script>
+    window.addEventListener('keydown', function (e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if (!audio) {
+            return;
+        } // stops the function from running
+        audio.currentTime = 0; //rewind to start
+        audio.play();
+        key.classList.add('playing')
+    });
+
+    function removeTransition(e) {
+        console.log(e);
+        if (e.propertyName !== 'transform') {
+            return;
+        }
+        this.classList.remove('playing');
+    }
+
+    const keys = document.querySelectorAll('.key')
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+</script>
+
+</html>
